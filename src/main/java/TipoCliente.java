@@ -1,17 +1,16 @@
 public enum TipoCliente {
-    GENERAL(15000),
-    ESTUDIANTE(12000),
-    NIÑO(10000),
-    ADULTO_MAYOR(11000);
+    GENERAL(1),
+    ESTUDIANTE(0.80),
+    NIÑO(0.66),
+    ADULTO_MAYOR(0.72);
 
-    private int valorEntrada;
+    private final double descuento;
 
-    TipoCliente(int valorEntrada) {
-        this.valorEntrada = valorEntrada;
+    TipoCliente(double valorEntrada) {
+        this.descuento = valorEntrada;
     }
 
-    public int getValorEntrada() {
-        return valorEntrada;
+    public double getDescuento() {
+        return descuento;
     }
 }
-
