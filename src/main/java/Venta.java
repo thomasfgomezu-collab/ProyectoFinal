@@ -7,17 +7,22 @@ public class Venta {
     private Asiento asiento;
     private LocalDateTime fechaYHora;
     private double valorPagado;
-
     private EstadoVenta estadoVenta;
 
-    public Venta(int codigo, Cliente cliente, Funcion funcion, Asiento asiento, LocalDateTime fechaYHora, double valorPagado, EstadoVenta estadoVenta) {
+    public Venta(int codigo, Cliente cliente, Funcion funcion, Asiento asiento) {
         this.codigo = codigo;
         this.cliente = cliente;
         this.funcion = funcion;
         this.asiento = asiento;
-        this.fechaYHora = fechaYHora;
-        this.valorPagado = valorPagado;
-        this.estadoVenta = estadoVenta;
+        this.fechaYHora = LocalDateTime.now();
+        this.estadoVenta = EstadoVenta.ACTIVA;
+
+        this.valorPagado = cliente.calcularPrecioEntrada(funcion.getValorBase());
+        this.asiento.setEstadoAsiento(EstadoAsiento.OCUPADO);
+    }
+    public void cancelarVenta() {
+        this.estadoVenta = EstadoVenta.CANCELADA;
+        this.asiento.setEstadoAsiento(EstadoAsiento.DISPONIBLE);
     }
 
     public int getCodigo() {

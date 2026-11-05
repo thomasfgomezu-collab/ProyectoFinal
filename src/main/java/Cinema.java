@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,61 @@ public class Cinema {
         ListaCliente = new ArrayList<>();
         ListaVenta = new ArrayList<>();
         ListaFunciones = new ArrayList<>();
+    }
+
+    public Pelicula buscarPeliculaPorCodigo(int codigo) {
+        for (Pelicula p : ListaPelicula) {
+            if (p.getCodigo() == codigo) return p;
+        }
+        return null;
+    }
+    public boolean registrarPelicula(Pelicula pelicula) {
+        if (buscarPeliculaPorCodigo(pelicula.getCodigo()) != null) return false;
+        ListaPelicula.add(pelicula);
+        return true;
+    }
+    public Sala buscarSalaPorCodigo(int codigo) {
+        for (Sala s : ListaSala) {
+            if (s.getCodigo() == codigo) return s;
+        }
+        return null;
+    }
+    public boolean registrarSala(Sala sala) {
+        if (buscarSalaPorCodigo(sala.getCodigo()) != null) return false;
+        ListaSala.add(sala);
+        return true;
+    }
+    public Funcion buscarFuncionPorCodigo(int codigo) {
+        for (Funcion f : ListaFunciones) {
+            if (f.getCodigo() == codigo) return f;
+        }
+        return null;
+    }
+    public boolean programarFuncion(int codigo, int codigoPelicula, int codigoSala, LocalDateTime fecha, String hora, double valorBase) {
+        Pelicula pelicula = buscarPeliculaPorCodigo(codigoPelicula);
+        Sala sala = buscarSalaPorCodigo(codigoSala);
+
+        if (pelicula == null || sala == null || sala.getEstadoSala() == EstadoSala.FUERA_DE_SERVICIO) {
+            return false;
+        }
+
+        if (buscarFuncionPorCodigo(codigo) != null) return false;
+
+        Funcion funcion = new Funcion(codigo, pelicula, sala, fecha, hora, valorBase, EstadoFuncion.PROGRAMADA);
+        ListaFunciones.add(funcion);
+        return true;
+    }
+
+    public boolean registrarCliente(Cliente cliente) {
+        if (buscarClientePorId(cliente.getIdentificacion()) != null) return false;
+        ListaCliente.add(cliente);
+        return true;
+    }
+    public Cliente buscarClientePorId(int id) {
+        for (Cliente c : ListaCliente) {
+            if (c.getIdentificacion() == id) return c;
+        }
+        return null;
     }
 
     public String getNombre() {

@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Funcion {
     private int codigo;
@@ -10,7 +11,7 @@ public class Funcion {
 
     private EstadoFuncion estadoFuncion;
 
-    public Funcion(int codigo, Pelicula pelicula, Sala sala, LocalDate fecha, String hora, double valorBase, EstadoFuncion estadoFuncion) {
+    public Funcion(int codigo, Pelicula pelicula, Sala sala, LocalDateTime fecha, String hora, double valorBase, EstadoFuncion estadoFuncion) {
         this.codigo = codigo;
         this.pelicula = pelicula;
         this.sala = sala;
