@@ -10,7 +10,7 @@ public class Cinema {
     private  List<Pelicula> ListaPelicula;
     private List<Cliente> ListaCliente;
     private List<Venta> ListaVenta;
-    private List<Funcion> ListaFuncione;
+    private List<Funcion> ListaFunciones;
 
     public Cinema(String nombre, int nit, String direccion) {
         this.nombre = nombre;
@@ -20,7 +20,7 @@ public class Cinema {
         ListaPelicula = new ArrayList<>();
         ListaCliente = new ArrayList<>();
         ListaVenta = new ArrayList<>();
-        ListaFuncione = new ArrayList<>();
+        ListaFunciones = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -79,12 +79,12 @@ public class Cinema {
         ListaVenta = listaVenta;
     }
 
-    public List<Funcion> getListaFuncione() {
-        return ListaFuncione;
+    public List<Funcion> getListaFunciones() {
+        return ListaFunciones;
     }
 
-    public void setListaFuncione(List<Funcion> listaFuncione) {
-        ListaFuncione = listaFuncione;
+    public void setListaFunciones(List<Funcion> listaFuncione) {
+        ListaFunciones = listaFuncione;
     }
 
     @Override
@@ -97,6 +97,6 @@ public class Cinema {
                 ", ListaPelicula " + ListaPelicula +
                 ", ListaCliente " + ListaCliente +
                 ", ListaVenta " + ListaVenta +
-                ", ListaFuncione " + ListaFuncione ;
+                ", ListaFuncione " + ListaFunciones ;
     }
 }

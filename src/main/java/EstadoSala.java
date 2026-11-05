@@ -1,4 +1,4 @@
 public enum EstadoSala {
-    ACTIVA,
-    DESHABILITADA
+    DISPONIBLE,
+    FUERA_DE_SERVICIO;
 }

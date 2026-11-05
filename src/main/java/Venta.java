@@ -1,16 +1,16 @@
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Venta {
     private int codigo;
     private Cliente cliente;
     private Funcion funcion;
     private Asiento asiento;
-    private LocalDate fechaYHora;
+    private LocalDateTime fechaYHora;
     private double valorPagado;
 
     private EstadoVenta estadoVenta;
 
-    public Venta(int codigo, Cliente cliente, Funcion funcion, Asiento asiento, LocalDate fechaYHora, double valorPagado, EstadoVenta estadoVenta) {
+    public Venta(int codigo, Cliente cliente, Funcion funcion, Asiento asiento, LocalDateTime fechaYHora, double valorPagado, EstadoVenta estadoVenta) {
         this.codigo = codigo;
         this.cliente = cliente;
         this.funcion = funcion;
@@ -52,11 +52,11 @@ public class Venta {
         this.asiento = asiento;
     }
 
-    public LocalDate getFechaYHora() {
+    public LocalDateTime getFechaYHora() {
         return fechaYHora;
     }
 
-    public void setFechaYHora(LocalDate fechaYHora) {
+    public void setFechaYHora(LocalDateTime fechaYHora) {
         this.fechaYHora = fechaYHora;
     }
 

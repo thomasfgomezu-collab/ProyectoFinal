@@ -3,16 +3,15 @@ public class Pelicula {
     private String nombre;
     private String genero;
     private String duracion;
-    private String estado;
-
+    private EstadoPelicula estadoPelicula;
     private ClasificacionPelicula clasificacionPelicula;
 
-    Pelicula(int codigo, String nombre, String genero, String duracion, String estado, ClasificacionPelicula clasificacionPelicula) {
+   public Pelicula(int codigo, String nombre, String genero, String duracion, EstadoPelicula estadoPelicula, ClasificacionPelicula clasificacionPelicula) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.genero = genero;
         this.duracion = duracion;
-        this.estado = estado;
+        this.estadoPelicula = estadoPelicula;
         this.clasificacionPelicula = clasificacionPelicula;
     }
 
@@ -48,12 +47,12 @@ public class Pelicula {
         this.duracion = duracion;
     }
 
-    public String getEstado() {
-        return estado;
+    public EstadoPelicula getEstado() {
+        return estadoPelicula;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setEstado(EstadoPelicula estadoPelicula) {
+        this.estadoPelicula = estadoPelicula;
     }
 
     public ClasificacionPelicula getClasificacionPelicula() {
@@ -66,13 +65,14 @@ public class Pelicula {
 
     @Override
     public String toString() {
-        return "Pelicula: " +
-                "codigo= " + codigo +
-                ", nombre= " + nombre + '\'' +
-                ", genero= " + genero + '\'' +
-                ", duracion= " + duracion + '\'' +
-                ", estado= " + estado + '\'' +
-                ", clasificacionPelicula= " + clasificacionPelicula ;
+        return "Pelicula{" +
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", genero='" + genero + '\'' +
+                ", duracion='" + duracion + "min" +'\'' +
+                ", estadoPelicula=" + estadoPelicula +
+                ", clasificacionPelicula=" + clasificacionPelicula +
+                '}';
     }
 
 }
