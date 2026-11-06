@@ -16,6 +16,26 @@ public class Sala {
         this.estadoSala = estadoSala;
         ListaAsiento = new ArrayList<>();
     }
+    public void generarAsientos(int filas, int columnas) {
+        ListaAsiento.clear();
+        int codigoAsiento = 1;
+        for (int f = 1; f <= filas; f++) {
+            String letraFila = String.valueOf((char) ('A' + f - 1)); // Convierte 1->A, 2->B, 3->C...
+            for (int c = 1; c <= columnas; c++) {
+                Asiento nuevo = new Asiento(codigoAsiento++, letraFila, String.valueOf(c), EstadoAsiento.DISPONIBLE);
+                ListaAsiento.add(nuevo);
+            }
+        }
+        this.capacidad = filas * columnas;
+    }
+    public Asiento buscarAsiento(String fila, String numero) {
+        for (Asiento a : ListaAsiento) {
+            if (a.getFila().equalsIgnoreCase(fila) && a.getNumero().equalsIgnoreCase(numero)) {
+                return a;
+            }
+        }
+        return null;
+    }
 
     public int getCodigo() {
         return codigo;

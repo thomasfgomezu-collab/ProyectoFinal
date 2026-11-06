@@ -1,6 +1,8 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Cinema {
     private String nombre;
@@ -78,7 +80,71 @@ public class Cinema {
         }
         return null;
     }
+    public Venta procesarVenta(int codigoVenta, int idCliente, int codigoFuncion, String fila, String numero) {
+        Cliente cliente = buscarClientePorId(idCliente);
+        Funcion funcion = buscarFuncionPorCodigo(codigoFuncion);
 
+        if (cliente == null || funcion == null || funcion.getEstadoFuncion() != EstadoFuncion.PROGRAMADA) {
+            return null;
+        }
+
+        Asiento asiento = funcion.getSala().buscarAsiento(fila, numero);
+        if (asiento == null || asiento.getEstadoAsiento() == EstadoAsiento.OCUPADO) {
+            return null;
+        }
+
+        // Crea la venta (calcula la tarifa polimórficamente y ocupa el asiento)
+        Venta venta = new Venta(codigoVenta, cliente, funcion, asiento);
+        ListaVenta.add(venta);
+        return venta;
+    }
+
+    public boolean cancelarVenta(int codigoVenta) {
+        for (Venta v : ListaVenta) {
+            if (v.getCodigo() == codigoVenta && v.getEstadoVenta() == EstadoVenta.ACTIVA) {
+                v.cancelarVenta();
+                return true;
+            }
+        }
+        return false;
+    }
+    public int reporteTotalEntradasVendidas() {
+        int total = 0;
+        for (Venta v : ListaVenta) {
+            if (v.getEstadoVenta() == EstadoVenta.ACTIVA) total++;
+        }
+        return total;
+    }
+
+    public double reporteTotalIngresos() {
+        double ingresos = 0.0;
+        for (Venta v : ListaVenta) {
+            if (v.getEstadoVenta() == EstadoVenta.ACTIVA) ingresos += v.getValorPagado();
+        }
+        return ingresos;
+    }
+
+    public String reportePeliculaMasVendida() {
+        if (ListaVenta.isEmpty()) return "Sin ventas registradas";
+
+        Map<Pelicula, Integer> contador = new HashMap<>();
+        for (Venta v : ListaVenta) {
+            if (v.getEstadoVenta() == EstadoVenta.ACTIVA) {
+                Pelicula p = v.getFuncion().getPelicula();
+                contador.put(p, contador.getOrDefault(p, 0) + 1);
+            }
+        }
+
+        Pelicula masVendida = null;
+        int max = -1;
+        for (Map.Entry<Pelicula, Integer> entry : contador.entrySet()) {
+            if (entry.getValue() > max) {
+                max = entry.getValue();
+                masVendida = entry.getKey();
+            }
+        }
+        return masVendida != null ? masVendida.getNombre() + " (" + max + " entradas)" : "Sin ventas";
+    }
     public String getNombre() {
         return nombre;
     }
