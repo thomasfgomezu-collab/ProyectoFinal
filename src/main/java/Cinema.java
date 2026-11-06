@@ -92,7 +92,7 @@ public class Cinema {
         if (asiento == null || asiento.getEstadoAsiento() == EstadoAsiento.OCUPADO) {
             return null;
         }
-        
+
         Venta venta = new Venta(codigoVenta, cliente, funcion, asiento);
         ListaVenta.add(venta);
         return venta;

@@ -20,7 +20,7 @@ public class Sala {
         ListaAsiento.clear();
         int codigoAsiento = 1;
         for (int f = 1; f <= filas; f++) {
-            String letraFila = String.valueOf((char) ('A' + f - 1)); // Convierte 1->A, 2->B, 3->C...
+            String letraFila = String.valueOf((char) ('A' + f - 1));
             for (int c = 1; c <= columnas; c++) {
                 Asiento nuevo = new Asiento(codigoAsiento++, letraFila, String.valueOf(c), EstadoAsiento.DISPONIBLE);
                 ListaAsiento.add(nuevo);
