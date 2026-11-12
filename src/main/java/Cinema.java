@@ -26,6 +26,8 @@ public class Cinema {
         ListaFunciones = new ArrayList<>();
     }
 
+    //Peliculas
+
     public Pelicula buscarPeliculaPorCodigo(int codigo) {
         for (Pelicula p : ListaPelicula) {
             if (p.getCodigo() == codigo) return p;
@@ -37,6 +39,47 @@ public class Cinema {
         ListaPelicula.add(pelicula);
         return true;
     }
+
+    public void consultarPeliculas() {
+        if(ListaPelicula.size() == 0) {
+            System.out.println("No existen clientes registrados");
+        }
+        else {
+            for(Pelicula peliculaLista : ListaPelicula) {
+                System.out.println(peliculaLista);
+                System.out.println("----------------");
+            }
+        }
+    }
+
+    public boolean actualizarPelicula(int codigo, Pelicula peliculaActualizada){
+        for (Pelicula p: ListaPelicula){
+            if(p.getCodigo() == codigo){
+                p.setNombre(peliculaActualizada.getNombre());
+                p.setGenero(peliculaActualizada.getGenero());
+                p.setDuracion(peliculaActualizada.getDuracion());
+                p.setClasificacionPelicula(peliculaActualizada.getClasificacionPelicula());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deshabilitarPelicula(Pelicula pelicula){
+        for (Pelicula p: ListaPelicula){
+            if(p.getCodigo() == pelicula.getCodigo()){
+                if (p.getEstadoPelicula()==EstadoPelicula.DISPONIBLE){
+                    p.setEstadoPelicula(EstadoPelicula.NO_DISPONIBLE);
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
+    //Salas
+
     public Sala buscarSalaPorCodigo(int codigo) {
         for (Sala s : ListaSala) {
             if (s.getCodigo() == codigo) return s;
@@ -48,6 +91,74 @@ public class Cinema {
         ListaSala.add(sala);
         return true;
     }
+
+    public void consultarSalas() {
+        if(ListaSala.size() == 0) {
+            System.out.println("No existen clientes registrados");
+        }
+        else {
+            for(Sala salaLista : ListaSala) {
+                System.out.println(salaLista);
+                System.out.println("----------------");
+            }
+        }
+    }
+
+    public boolean actualizarSala(int codigo, Sala salaActualizada){
+        for (Sala s: ListaSala){
+            if(s.getCodigo() == codigo){
+                s.setNombre(salaActualizada.getNombre());
+                s.setCapacidad(salaActualizada.getCapacidad());
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deshabilitarSala(Sala sala){
+        for (Sala s: ListaSala){
+            if(s.getCodigo() == sala.getCodigo()){
+                if (s.getEstadoSala()==EstadoSala.DISPONIBLE){
+                    s.setEstadoSala(EstadoSala.FUERA_DE_SERVICIO);
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
+    //Asiento
+
+    public boolean generarAsiento(int codigoSala, Asiento asiento){
+        for (Sala s : ListaSala){
+            if(codigoSala==s.getCodigo()){
+                s.getListaAsiento().add(asiento);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void mostrarAsientosPorSala(int codigoSala){
+        for (Sala s : ListaSala){
+            if (codigoSala==s.getCodigo()){
+                if(s.getListaAsiento().size() == 0) {
+                    System.out.println("No existen asientos registrados");
+                }
+                else {
+                    System.out.println("Asientos de la sala: "+s.getNombre());
+                    for(Asiento asiento : s.getListaAsiento()) {
+                        System.out.println(asiento);
+                        System.out.println("----------------");
+                    }
+
+                }
+            }
+        }
+    }
+
     public Funcion buscarFuncionPorCodigo(int codigo) {
         for (Funcion f : ListaFunciones) {
             if (f.getCodigo() == codigo) return f;
