@@ -1,4 +1,4 @@
-public abstract class Cliente implements ICalculadorTarifa {
+public class Cliente{
     private int identificacion;
     private String nombre;
     private TipoCliente tipoCliente;
@@ -7,9 +7,6 @@ public abstract class Cliente implements ICalculadorTarifa {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.tipoCliente = tipoCliente;
-    }
-
-    protected Cliente() {
     }
 
     public int getIdentificacion() {

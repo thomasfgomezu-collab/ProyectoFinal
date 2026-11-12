@@ -16,13 +16,7 @@ public class Venta {
         this.asiento = asiento;
         this.fechaYHora = LocalDateTime.now();
         this.estadoVenta = EstadoVenta.ACTIVA;
-
-        this.valorPagado = cliente.calcularPrecioEntrada(funcion.getValorBase());
-        this.asiento.setEstadoAsiento(EstadoAsiento.OCUPADO);
-    }
-    public void cancelarVenta() {
-        this.estadoVenta = EstadoVenta.CANCELADA;
-        this.asiento.setEstadoAsiento(EstadoAsiento.DISPONIBLE);
+        this.valorPagado = funcion.getValorBase() * cliente.getTipoCliente().getDescuento();
     }
 
     public int getCodigo() {
@@ -91,5 +85,9 @@ public class Venta {
                 ", fechaYHora " + fechaYHora +
                 ", valorPagado " + valorPagado +
                 ", estadoVenta " + estadoVenta ;
+    }
+    public void cancelarVenta() {
+        this.estadoVenta = EstadoVenta.CANCELADA;
+        this.asiento.setEstadoAsiento(EstadoAsiento.DISPONIBLE);
     }
 }
