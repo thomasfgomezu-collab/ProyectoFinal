@@ -3,6 +3,7 @@ public class Pelicula {
     private String nombre;
     private String genero;
     private String duracion;
+    private String estado;
     private ClasificacionPelicula clasificacionPelicula;
 
    public Pelicula(int codigo, String nombre, String genero, String duracion, ClasificacionPelicula clasificacionPelicula) {
@@ -10,6 +11,7 @@ public class Pelicula {
         this.nombre = nombre;
         this.genero = genero;
         this.duracion = duracion;
+        this.estado = estado;
         this.clasificacionPelicula = clasificacionPelicula;
     }
 
@@ -41,6 +43,14 @@ public class Pelicula {
         return duracion;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
@@ -60,6 +70,7 @@ public class Pelicula {
                 ", nombre='" + nombre + '\'' +
                 ", genero='" + genero + '\'' +
                 ", duracion='" + duracion + "min" +'\'' +
+                ", estado='" + estado + '\'' +
                 ", clasificacionPelicula=" + clasificacionPelicula +
                 '}';
     }
