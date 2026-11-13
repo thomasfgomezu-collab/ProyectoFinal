@@ -45,7 +45,7 @@ public class Cinema {
 
     public void consultarPeliculas() {
         if(ListaPelicula.size() == 0) {
-            System.out.println("No existen clientes registrados");
+            System.out.println("No existen peliculas registrados");
         }
         else {
             for(Pelicula peliculaLista : ListaPelicula) {
@@ -68,9 +68,9 @@ public class Cinema {
         return false;
     }
 
-    public boolean deshabilitarPelicula(Pelicula pelicula){
+    public boolean deshabilitarPelicula(int codigo){
         for (Pelicula p: ListaPelicula){
-            if(p.getCodigo() == pelicula.getCodigo()){
+            if(p.getCodigo() == codigo){
                 if (p.getEstadoPelicula()==EstadoPelicula.DISPONIBLE){
                     p.setEstadoPelicula(EstadoPelicula.NO_DISPONIBLE);
                     return true;
@@ -97,7 +97,7 @@ public class Cinema {
 
     public void consultarSalas() {
         if(ListaSala.size() == 0) {
-            System.out.println("No existen clientes registrados");
+            System.out.println("No existen salas registrados");
         }
         else {
             for(Sala salaLista : ListaSala) {
@@ -119,9 +119,9 @@ public class Cinema {
         return false;
     }
 
-    public boolean deshabilitarSala(Sala sala){
+    public boolean deshabilitarSala(int codigo){
         for (Sala s: ListaSala){
-            if(s.getCodigo() == sala.getCodigo()){
+            if(s.getCodigo() == codigo){
                 if (s.getEstadoSala()==EstadoSala.DISPONIBLE){
                     s.setEstadoSala(EstadoSala.FUERA_DE_SERVICIO);
                     return true;

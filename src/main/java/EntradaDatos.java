@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class EntradaDatos {
     private Scanner Scanner= new Scanner(System.in);
@@ -94,5 +96,13 @@ public class EntradaDatos {
 
     public String siNo(boolean valor) {
         return valor ? "sí" : "no";
+    }
+
+    public LocalDate leerFecha(String mensaje) {
+        System.out.print(mensaje);
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        return LocalDate.parse(Scanner.nextLine(), formato);
     }
 }
