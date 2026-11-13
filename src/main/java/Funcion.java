@@ -5,13 +5,13 @@ public class Funcion {
     private int codigo;
     private Pelicula pelicula;
     private Sala sala;
-    private LocalDateTime fecha;
+    private LocalDate fecha;
     private String hora;
     private double valorBase;
 
     private EstadoFuncion estadoFuncion;
 
-    public Funcion(int codigo, Pelicula pelicula, Sala sala, LocalDateTime fecha, String hora, double valorBase, EstadoFuncion estadoFuncion) {
+    public Funcion(int codigo, Pelicula pelicula, Sala sala, LocalDate fecha, String hora, double valorBase, EstadoFuncion estadoFuncion) {
         this.codigo = codigo;
         this.pelicula = pelicula;
         this.sala = sala;
@@ -45,11 +45,11 @@ public class Funcion {
         this.sala = sala;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

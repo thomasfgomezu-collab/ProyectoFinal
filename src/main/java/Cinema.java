@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ public class Cinema {
     private List<Sala> ListaSala;
     private  List<Pelicula> ListaPelicula;
     private List<Cliente> ListaCliente;
+    private List<Empleado> ListaEmpleado;
     private List<Venta> ListaVenta;
     private List<Funcion> ListaFunciones;
 
@@ -24,6 +26,7 @@ public class Cinema {
         ListaCliente = new ArrayList<>();
         ListaVenta = new ArrayList<>();
         ListaFunciones = new ArrayList<>();
+        ListaEmpleado = new ArrayList<>();
     }
 
     //Peliculas
@@ -159,13 +162,15 @@ public class Cinema {
         }
     }
 
+    //Funciones
+
     public Funcion buscarFuncionPorCodigo(int codigo) {
         for (Funcion f : ListaFunciones) {
             if (f.getCodigo() == codigo) return f;
         }
         return null;
     }
-    public boolean programarFuncion(int codigo, int codigoPelicula, int codigoSala, LocalDateTime fecha, String hora, double valorBase) {
+    public boolean programarFuncion(int codigo, int codigoPelicula, int codigoSala, LocalDate fecha, String hora, double valorBase) {
         Pelicula pelicula = buscarPeliculaPorCodigo(codigoPelicula);
         Sala sala = buscarSalaPorCodigo(codigoSala);
 
@@ -180,6 +185,41 @@ public class Cinema {
         return true;
     }
 
+    public void buscarFuncionesPelicula(int codigo){
+        Pelicula pelicula=buscarPeliculaPorCodigo(codigo);
+        if (pelicula==null){
+            System.out.println("No existe una pelicula con este codigo.");
+        }else {
+            System.out.println("Pelicula: " + pelicula.getNombre());
+            for (Funcion f : ListaFunciones){
+                int i=1;
+                if (codigo==f.getPelicula().getCodigo()){
+                    System.out.println(" Funcion "+i);
+                    System.out.println(f.getSala());
+                    System.out.println(f.getFecha());
+                    System.out.println(f.getHora());
+                    System.out.println("--------------");
+                    i++;
+                }
+            }
+        }
+    }
+
+    public void buscarFuncionesFecha(LocalDate fecha){
+        if (ListaFunciones.isEmpty()){
+            System.out.println("No existen funciones para este dia.");
+        }else {
+            for (Funcion f : ListaFunciones){
+                if (fecha == f.getFecha()){
+                    System.out.println(f);
+                    System.out.println("----------------");
+                }
+            }
+        }
+    }
+
+    //Cliente
+
     public boolean registrarCliente(Cliente cliente) {
         if (buscarClientePorId(cliente.getIdentificacion()) != null) return false;
         ListaCliente.add(cliente);
@@ -191,6 +231,58 @@ public class Cinema {
         }
         return null;
     }
+
+    public void BuscarComprasCliente(int id) {
+        for (Cliente c : ListaCliente){
+            if (id==c.getIdentificacion()){
+                if(c.getListaVenta().size() == 0) {
+                    System.out.println("No existen ventas registrados");
+                }
+                else {
+                    System.out.println("Compras hechas por: "+c.getNombre());
+                    for(Venta v : c.getListaVenta()) {
+                        System.out.println(v);
+                        System.out.println("----------------");
+                    }
+
+                }
+            }
+        }
+    }
+
+    //Empleado
+
+    public boolean registrarEmpleado(Empleado empleado) {
+        if (buscarEmpleadoPorId(empleado.getIdentificacion()) != null) return false;
+        ListaEmpleado.add(empleado);
+        return true;
+    }
+    public Empleado buscarEmpleadoPorId(int id) {
+        for (Empleado empleado : ListaEmpleado) {
+            if (empleado.getIdentificacion() == id)
+                return empleado;
+        }
+        return null;
+    }
+
+    public void BuscarVentasEmpleado(int id) {
+        for (Empleado e : ListaEmpleado){
+            if (id==e.getIdentificacion()){
+                if(e.getListaVenta().size() == 0) {
+                    System.out.println("No existen ventas registrados");
+                }
+                else {
+                    System.out.println("Compras hechas por: "+e.getNombre());
+                    for(Venta v : e.getListaVenta()) {
+                        System.out.println(v);
+                        System.out.println("----------------");
+                    }
+
+                }
+            }
+        }
+    }
+
     public Venta procesarVenta(int codigoVenta, int idCliente, int codigoFuncion, String fila, String numero) {
         Cliente cliente = buscarClientePorId(idCliente);
         Funcion funcion = buscarFuncionPorCodigo(codigoFuncion);
@@ -317,6 +409,14 @@ public class Cinema {
 
     public void setListaFunciones(List<Funcion> listaFuncione) {
         ListaFunciones = listaFuncione;
+    }
+
+    public List<Empleado> getListaEmpleado() {
+        return ListaEmpleado;
+    }
+
+    public void setListaEmpleado(List<Empleado> listaEmpleado) {
+        ListaEmpleado = listaEmpleado;
     }
 
     @Override
