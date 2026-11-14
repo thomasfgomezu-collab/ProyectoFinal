@@ -6,6 +6,7 @@ public interface ICliente {
     static double descuentoAdultoMayor=0.15;
 
     default double calcularDescuento(double valor){
-
+        double a= Double.parseDouble(null);
+    return a;
     }
 }

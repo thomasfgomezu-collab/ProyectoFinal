@@ -8,7 +8,6 @@ public class Funcion {
     private LocalDate fecha;
     private String hora;
     private double valorBase;
-
     private EstadoFuncion estadoFuncion;
 
     public Funcion(int codigo, Pelicula pelicula, Sala sala, LocalDate fecha, String hora, double valorBase, EstadoFuncion estadoFuncion) {
