@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PeliculaTest {
-    Pelicula pelicula=new Pelicula(1234,"fast and furious","accion","2:00",  ClasificacionPelicula.MAYORES_12);
+    Pelicula pelicula=new Pelicula(1234,"fast and furious","accion","2:00",EstadoPelicula.DISPONIBLE,  ClasificacionPelicula.MAYORES_12);
 
     @Test
     void comprobarSiDatosSonCorrectos() {
@@ -17,6 +17,6 @@ public class PeliculaTest {
 
     @Test
     void noPermitirCodigoNegativo(){
-        assertThrows(IllegalArgumentException.class,()->{new Pelicula(-1234,"fast and furious","accion","2:00", ClasificacionPelicula.MAYORES_12);});
+        assertThrows(IllegalArgumentException.class,()->{new Pelicula(-1234,"fast and furious","accion","2:00",EstadoPelicula.DISPONIBLE, ClasificacionPelicula.MAYORES_12);});
     }
 }

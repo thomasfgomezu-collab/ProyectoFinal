@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Aplicacion {
 
@@ -28,7 +30,7 @@ public class Aplicacion {
                 case 3 -> administrarPeliculas();
                 case 4 -> adminiatrarSalas();
                 case 5 -> adminitrarFunciones();
-
+                case 6 -> ventaDeEntrada();
                 case 10-> reportesVentas();
                 case 0 -> System.out.println("Gracias por utilizar CinemaUQ.");
                 default -> System.out.println("Opción no valida");
@@ -99,9 +101,9 @@ public class Aplicacion {
             String nombre= datos.leerTextoNoVacio("Ingrese el nombre de la pelicula: ");
             String genero= datos.leerTextoNoVacio("Ingrese el género de la pelicula: ");
             String duracion= datos.leerTextoNoVacio("Ingrese la duración: ");
-            EstadoPelicula estadoPelicula= datos.seleccionarEnum(EstadoPelicula.values(),"Estado de la pelicula");
+            EstadoPelicula estadoPelicula1= datos.seleccionarEnum(EstadoPelicula.values(),"Estado de la pelicula");
             ClasificacionPelicula clasificacionPelicula=datos.seleccionarEnum(ClasificacionPelicula.values(),"Clasidicacón de la,pelicula");
-            Pelicula pelicula=new Pelicula(codigo, nombre, genero, duracion, estadoPelicula, clasificacionPelicula);
+            Pelicula pelicula=new Pelicula(codigo, nombre, genero, duracion, estadoPelicula1, clasificacionPelicula);
             if (cinema.registrarPelicula(pelicula)){
                 System.out.println("La pelicula ha sido registrada correctamente.");
             }else {
@@ -208,6 +210,19 @@ public class Aplicacion {
         int opcion=datos.leerEnteroEnRango("Opción: ", 0, 3);
         if (opcion==1){
             System.out.println("---Resgistrar función---");
+            int codigo=datos.leerEntero("Ingrese el codigo de la funcion: ");
+            int codigoPelicula=datos.leerEntero("Ingrese el codigo de la pelicula: ");
+            Pelicula pelicula=cinema.buscarPeliculaPorCodigo(codigoPelicula);
+            int codigoSala=datos.leerEntero("Ingrese el codigo de la sala: ");
+            Sala sala=cinema.buscarSalaPorCodigo(codigoSala);
+            String fecha=datos.leerTexto("Ingrese la fecha de la funcion: ");
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate fecha1= LocalDate.parse(fecha, formato);
+            String hora=datos.leerTexto("Ingrese la hora de la funcion: ");
+            double valorBase= datos.leerDouble("Ingrese el valor base: ");
+            EstadoFuncion estadoFuncion=datos.seleccionarEnum(EstadoFuncion.values(),"estado funcion");
+
+            Funcion funcion=new Funcion(codigo,pelicula,fecha1,hora,valorBase,estadoFuncion);
 
         } else if (opcion==2) {
             System.out.println("---Concultar funciones por fecha---");
@@ -220,6 +235,16 @@ public class Aplicacion {
         }
     }
 
+    private void ventaDeEntrada(){
+        System.out.println("---Venta de entrada---");
+        System.out.println("Ingrese codigo de la venta: ");
+        int codigoDeVenta= datos.leerEntero("ingrese codigo de venta");
+        int codigoClienteVenta=datos.leerEntero("ingrese codigo del cliente: ");
+        Cliente clienteVenta=cinema.buscarClientePorId(codigoClienteVenta);
+        int codigoFuncionVenta= datos.leerEntero("");
+
+        Venta venta=new Venta()
+    }
     //otras funciones del case
 
 
@@ -256,4 +281,18 @@ public class Aplicacion {
             cinema.reportePeliculaMasVendida();
         }
     }
+
+    public static void imprimirListaFunciones(List<Funcion> listaFunciones) {
+        if (listaFunciones == null || listaFunciones.isEmpty()) {
+            System.out.println("La lista de funciones está vacía.");
+            return;
+        }
+
+        for (int i = 0; i < listaFunciones.size(); i++) {
+            System.out.println("--- Función " + (i + 1) + " ---");
+            // Al pasar el objeto al println, Java llama automáticamente a nuestro método toString()
+            System.out.println(listaFunciones.get(i));
+        }
+    }
+}
 }
