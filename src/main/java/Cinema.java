@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -178,12 +179,29 @@ public class Cinema {
             return false;
         }
 
-        if (buscarFuncionPorCodigo(codigo) != null) return false;
+        if (buscarFuncionPorCodigo(codigo) != null){
+            return false;
+        }
 
         Funcion funcion = new Funcion(codigo, pelicula, sala, fecha, hora, valorBase, EstadoFuncion.PROGRAMADA);
         ListaFunciones.add(funcion);
         return true;
     }
+
+    public void MostrarListaFunciones(String mensaje){
+        int a=1;
+        if (ListaFunciones == null || ListaFunciones.isEmpty()) {
+            System.out.println("La lista de funciones está vacía.");
+        }
+        for(Funcion funcion : ListaFunciones){
+            System.out.println("-------------------------------------------------------------------------------------------------------------------");
+            System.out.println(a+" | Pelicula: "+ funcion.getPelicula().getNombre()+" | Sala: "+funcion.getSala().getNombre()+" | Fecha: " +funcion.getFecha()+" | Hora: " + funcion.getHora()+" | Disponibilidad: "+funcion.getEstadoFuncion());
+            a++;
+        }
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+    }
+
+
 
     public void buscarFuncionesPelicula(int codigo){
         Pelicula pelicula=buscarPeliculaPorCodigo(codigo);
@@ -283,22 +301,21 @@ public class Cinema {
         }
     }
 
-    public Venta procesarVenta(int codigoVenta, int idCliente, int codigoFuncion, String fila, String numero) {
+    public boolean procesarVenta(int codigoVenta, int idCliente, int codigoFuncion, String fila, String numero) {
         Cliente cliente = buscarClientePorId(idCliente);
         Funcion funcion = buscarFuncionPorCodigo(codigoFuncion);
 
         if (cliente == null || funcion == null || funcion.getEstadoFuncion() != EstadoFuncion.PROGRAMADA) {
-            return null;
+            return false;
         }
 
         Asiento asiento = funcion.getSala().buscarAsiento(fila, numero);
         if (asiento == null || asiento.getEstadoAsiento() == EstadoAsiento.OCUPADO) {
-            return null;
+            return false;
         }
 
         Venta venta = new Venta(codigoVenta, cliente, funcion, asiento);
-        ListaVenta.add(venta);
-        return venta;
+        return true;
     }
 
     public boolean cancelarVenta(int codigoVenta) {

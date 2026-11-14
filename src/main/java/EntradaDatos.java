@@ -1,3 +1,4 @@
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -99,10 +100,20 @@ public class EntradaDatos {
     }
 
     public LocalDate leerFecha(String mensaje) {
-        System.out.print(mensaje);
-
+        // Definimos el formato en el que el usuario debe ingresar la fecha (Día/Mes/Año)
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        return LocalDate.parse(Scanner.nextLine(), formato);
+        while (true) {
+            try {
+                // Solicitamos el texto usando tu lector habitual
+                String textoFecha =leerTexto(mensaje + " (Formato: dd/MM/yyyy): ");
+
+                // Intentamos parsear el texto a un objeto LocalDate
+                return LocalDate.parse(textoFecha, formato);
+
+            } catch (DateTimeParseException e) {
+                System.out.println("Fecha inválida o formato incorrecto. Por favor, intente de nuevo (Ej: 25/12/2026).");
+            }
+        }
     }
 }

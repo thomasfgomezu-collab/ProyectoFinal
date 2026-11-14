@@ -215,17 +215,20 @@ public class Aplicacion {
             Pelicula pelicula=cinema.buscarPeliculaPorCodigo(codigoPelicula);
             int codigoSala=datos.leerEntero("Ingrese el codigo de la sala: ");
             Sala sala=cinema.buscarSalaPorCodigo(codigoSala);
-            String fecha=datos.leerTexto("Ingrese la fecha de la funcion: ");
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate fecha1= LocalDate.parse(fecha, formato);
+            LocalDate fecha1= datos.leerFecha("ingrese la fecha(dd/mm/aaaa): ");
             String hora=datos.leerTexto("Ingrese la hora de la funcion: ");
             double valorBase= datos.leerDouble("Ingrese el valor base: ");
-            EstadoFuncion estadoFuncion=datos.seleccionarEnum(EstadoFuncion.values(),"estado funcion");
 
-            Funcion funcion=new Funcion(codigo,pelicula,fecha1,hora,valorBase,estadoFuncion);
+            boolean agregarFuncion=cinema.programarFuncion(codigo, codigoPelicula,codigoSala,fecha1,hora,valorBase);
+
+            if (agregarFuncion==false) {
+                System.out.println("La funcion ya esta programada o los datos son incorrectos");
+            }else {
+                System.out.println("Funcion agregada con exito");
+            }
 
         } else if (opcion==2) {
-            System.out.println("---Concultar funciones por fecha---");
+            System.out.println("---Consultar funciones por fecha---");
             LocalDate fecha= datos.leerFecha("Ingrese la fecha: ");
             cinema.buscarFuncionesFecha(fecha);
         }else {
@@ -235,23 +238,27 @@ public class Aplicacion {
         }
     }
 
-    private void ventaDeEntrada(){
+    private void ventaDeEntrada() {
         System.out.println("---Venta de entrada---");
-        System.out.println("Ingrese codigo de la venta: ");
-        int codigoDeVenta= datos.leerEntero("ingrese codigo de venta");
-        int codigoClienteVenta=datos.leerEntero("ingrese codigo del cliente: ");
-        Cliente clienteVenta=cinema.buscarClientePorId(codigoClienteVenta);
-        int codigoFuncionVenta= datos.leerEntero("");
+        int codigoDeVenta = datos.leerEntero("ingrese codigo de venta");
+        int codigoClienteVenta = datos.leerEntero("ingrese codigo del cliente: ");
+        Cliente clienteVenta = cinema.buscarClientePorId(codigoClienteVenta);
+        System.out.println("---Funciones---");
+        cinema.MostrarListaFunciones("---Funciones---");
+        Funcion funcion = imprimirListaFunciones();
+        cinema.mostrarAsientosPorSala(funcion.getSala().getCodigo());
+        String fila= datos.leerTexto("ingrese la fila del asiento");
+        String numero= datos.leerTexto("ingrese el numero del asiento");
 
-        Venta venta=new Venta()
+        boolean venta=cinema.procesarVenta(codigoDeVenta,codigoClienteVenta,funcion.getCodigo(),fila, numero);
+
+        if(venta==true){
+            System.out.println("la venta ha sido agregada con exito");
+        }else{
+            System.out.println("la venta no tiene los datos correctos o ya ha sido registrada");
+        }
     }
     //otras funciones del case
-
-
-
-
-
-
 
 
 
@@ -282,7 +289,15 @@ public class Aplicacion {
         }
     }
 
-    public static void imprimirListaFunciones(List<Funcion> listaFunciones) {
+    public Funcion imprimirListaFunciones() {
+        int numeroPelicula=datos.leerEntero("ingrese el numero de la funcion que desea comprar");
+
+        Funcion funcion= cinema.getListaFunciones().get(numeroPelicula-1);
+
+        return funcion;
+    }
+
+    public static void imprimirListaFuncionesa(List<Funcion> listaFunciones) {
         if (listaFunciones == null || listaFunciones.isEmpty()) {
             System.out.println("La lista de funciones está vacía.");
             return;
@@ -294,5 +309,4 @@ public class Aplicacion {
             System.out.println(listaFunciones.get(i));
         }
     }
-}
 }
