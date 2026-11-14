@@ -1,29 +1,20 @@
-public class Cliente{
-    private int identificacion;
-    private String nombre;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Cliente extends Persona{
+
     private TipoCliente tipoCliente;
 
-    public Cliente(int identificacion, String nombre, TipoCliente tipoCliente) {
-        this.identificacion = identificacion;
-        this.nombre = nombre;
+    private List<Venta> ListaVenta;
+
+    public Cliente(int identificacion, String nombre, String correo, String telefono, TipoCliente tipoCliente) {
+        super(identificacion, nombre, correo, telefono);
         this.tipoCliente = tipoCliente;
+
+        this.ListaVenta=new ArrayList<>();
     }
 
-    public int getIdentificacion() {
-        return identificacion;
-    }
 
-    public void setIdentificacion(int identificacion) {
-        this.identificacion = identificacion;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     public TipoCliente getTipoCliente() {
         return tipoCliente;
@@ -33,11 +24,17 @@ public class Cliente{
         this.tipoCliente = tipoCliente;
     }
 
+    public List<Venta> getListaVenta() {
+        return ListaVenta;
+    }
+
+    public void setListaVenta(List<Venta> listaVenta) {
+        ListaVenta = listaVenta;
+    }
+
     @Override
     public String toString() {
-        return "Cliente: " +
-                " identificacion " + identificacion +
-                ", nombre= " + nombre + '\'' +
-                ", tipoCliente " + tipoCliente ;
+        return "Cliente: "+super.toString()+
+                ", Tipo de cliente: "+tipoCliente;
     }
 }
