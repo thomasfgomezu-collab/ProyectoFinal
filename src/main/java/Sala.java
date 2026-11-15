@@ -16,17 +16,53 @@ public class Sala {
         this.estadoSala = estadoSala;
         ListaAsiento = new ArrayList<>();
     }
+
     public void generarAsientos(int filas, int columnas) {
-        ListaAsiento.clear();
+        if (filas <= 0 || filas > 26 || columnas <= 0) {
+            throw new IllegalArgumentException("Dimensiones inválidas: las filas deben estar entre 1 y 26, y las columnas deben ser mayores a 0.");
+        }
+
+        if (this.ListaAsiento == null) {
+            this.ListaAsiento = new ArrayList<>();
+        } else {
+            this.ListaAsiento.clear();
+        }
+
         int codigoAsiento = 1;
+
         for (int f = 1; f <= filas; f++) {
             String letraFila = String.valueOf((char) ('A' + f - 1));
+
             for (int c = 1; c <= columnas; c++) {
-                Asiento nuevo = new Asiento(codigoAsiento++, letraFila, String.valueOf(c), EstadoAsiento.DISPONIBLE);
-                ListaAsiento.add(nuevo);
+                Asiento nuevo = new Asiento(
+                        codigoAsiento++,
+                        letraFila,
+                        String.valueOf(c),
+                        EstadoAsiento.DISPONIBLE
+                );
+                this.ListaAsiento.add(nuevo);
             }
         }
+
         this.capacidad = filas * columnas;
+    }
+    public void mostrarMinimapa() {
+        String filaActual = "";
+        System.out.println("\n--- PANTALLA ---");
+
+        for (Asiento a : this.ListaAsiento) {
+            if (!a.getFila().equals(filaActual)) {
+                filaActual = a.getFila();
+                System.out.print("\nFila " + filaActual + ": ");
+            }
+
+            if (a.getEstadoAsiento() == EstadoAsiento.DISPONIBLE) {
+                System.out.print("[" + a.getFila() + a.getNumero() + "] ");
+            } else {
+                System.out.print("[X] ");
+            }
+        }
+        System.out.println("\n");
     }
     public Asiento buscarAsiento(String fila, String numero) {
         for (Asiento a : ListaAsiento) {

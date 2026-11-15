@@ -10,6 +10,9 @@ public class Asiento {
         this.numero = numero;
         this.estadoAsiento = estadoAsiento;
     }
+    public String getEtiqueta() {
+        return this.fila + this.numero;
+    }
 
     public int getCodigo() {
         return codigo;

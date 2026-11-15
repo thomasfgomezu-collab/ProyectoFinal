@@ -108,12 +108,13 @@ public class Cinema {
         }
     }
 
-    public boolean actualizarSala(int codigo, Sala salaActualizada){
-        for (Sala s: ListaSala){
-            if(s.getCodigo() == codigo){
+    public boolean actualizarSala(int codigo, Sala salaActualizada) {
+        for (Sala s : ListaSala) {
+            if (s.getCodigo() == codigo) {
                 s.setNombre(salaActualizada.getNombre());
                 s.setCapacidad(salaActualizada.getCapacidad());
-
+                s.setEstadoSala(salaActualizada.getEstadoSala());
+                s.setListaAsiento(salaActualizada.getListaAsiento());
                 return true;
             }
         }
@@ -168,23 +169,18 @@ public class Cinema {
     public Funcion buscarFuncionPorCodigo(int codigo) {
         for (Funcion f : ListaFunciones) {
             if (f.getCodigo() == codigo) return f;
-        }
-        return null;
+        } return null;
     }
     public boolean programarFuncion(int codigo, int codigoPelicula, int codigoSala, LocalDate fecha, String hora, double valorBase) {
         Pelicula pelicula = buscarPeliculaPorCodigo(codigoPelicula);
         Sala sala = buscarSalaPorCodigo(codigoSala);
-
-        if (pelicula == null || sala == null || sala.getEstadoSala() == EstadoSala.FUERA_DE_SERVICIO) {
+        if (pelicula == null || pelicula.getEstadoPelicula() == EstadoPelicula.NO_DISPONIBLE || sala == null || sala.getEstadoSala() == EstadoSala.FUERA_DE_SERVICIO) {
             return false;
         }
-
-        if (buscarFuncionPorCodigo(codigo) != null){
+        if (buscarFuncionPorCodigo(codigo) != null) {
             return false;
         }
-
-        Funcion funcion = new Funcion(codigo, pelicula, sala, fecha, hora, valorBase, EstadoFuncion.PROGRAMADA);
-        ListaFunciones.add(funcion);
+        Funcion funcion = new Funcion(codigo, pelicula, sala, fecha, hora, valorBase, EstadoFuncion.PROGRAMADA); ListaFunciones.add(funcion);
         return true;
     }
 
@@ -209,8 +205,8 @@ public class Cinema {
             System.out.println("No existe una pelicula con este codigo.");
         }else {
             System.out.println("Pelicula: " + pelicula.getNombre());
+            int i=1;
             for (Funcion f : ListaFunciones){
-                int i=1;
                 if (codigo==f.getPelicula().getCodigo()){
                     System.out.println(" Funcion "+i);
                     System.out.println(f.getSala());
@@ -228,7 +224,7 @@ public class Cinema {
             System.out.println("No existen funciones para este dia.");
         }else {
             for (Funcion f : ListaFunciones){
-                if (fecha == f.getFecha()){
+                if (fecha.equals(f.getFecha())){
                     System.out.println(f);
                     System.out.println("----------------");
                 }
@@ -301,13 +297,18 @@ public class Cinema {
         }
     }
 
-    public boolean procesarVenta(int codigoVenta, int idCliente, int idEmpleado, int codigoFuncion, String fila, String numero,LocalDate fecha) {
+    public boolean procesarVenta(int codigoVenta, int idCliente, int idEmpleado, int codigoFuncion, String fila, String numero, LocalDate fecha) {
         Cliente cliente = buscarClientePorId(idCliente);
         Funcion funcion = buscarFuncionPorCodigo(codigoFuncion);
         Empleado empleado = buscarEmpleadoPorId(idEmpleado);
 
-        if (cliente == null || funcion == null || funcion.getEstadoFuncion() != EstadoFuncion.PROGRAMADA) {
+        if (cliente == null || empleado == null || funcion == null || funcion.getEstadoFuncion() != EstadoFuncion.PROGRAMADA) {
             return false;
+        }
+        for (Venta v : ListaVenta) {
+            if (v.getCodigo() == codigoVenta) {
+                return false;
+            }
         }
 
         Asiento asiento = funcion.getSala().buscarAsiento(fila, numero);
@@ -315,7 +316,14 @@ public class Cinema {
             return false;
         }
 
-        Venta venta = new Venta(codigoVenta, cliente, empleado, funcion, asiento,fecha, ,EstadoVenta.ACTIVA);
+        double valorPagado = calcularPrecioVenta(cliente, funcion);
+
+        Venta venta = new Venta(codigoVenta, cliente, empleado, funcion, asiento, fecha, valorPagado, EstadoVenta.ACTIVA);
+        asiento.setEstadoAsiento(EstadoAsiento.OCUPADO);
+        ListaVenta.add(venta);
+        cliente.getListaVenta().add(venta);
+        empleado.getListaVenta().add(venta);
+
         return true;
     }
 
@@ -366,7 +374,9 @@ public class Cinema {
         return masVendida != null ? masVendida.getNombre() + " (" + max + " entradas)" : "Sin ventas";
     }
 
-    public double 
+    public double calcularPrecioVenta(Cliente cliente, Funcion funcion) {
+        return cliente.calcularDescuento(funcion.getValorBase());
+    }
     public String getNombre() {
         return nombre;
     }

@@ -13,11 +13,20 @@ public class Funcion {
     public Funcion(int codigo, Pelicula pelicula, Sala sala, LocalDate fecha, String hora, double valorBase, EstadoFuncion estadoFuncion) {
         this.codigo = codigo;
         this.pelicula = pelicula;
-        this.sala = sala;
         this.fecha = fecha;
         this.hora = hora;
         this.valorBase = valorBase;
         this.estadoFuncion = estadoFuncion;
+
+        if (sala != null) {
+            Sala copiaSala = new Sala(sala.getCodigo(), sala.getNombre(), sala.getCapacidad(), sala.getEstadoSala());
+            for (Asiento a : sala.getListaAsiento()) {
+                copiaSala.getListaAsiento().add(
+                        new Asiento(a.getCodigo(), a.getFila(), a.getNumero(), a.getEstadoAsiento())
+                );
+            }
+            this.sala = copiaSala;
+        }
     }
 
     public int getCodigo() {
