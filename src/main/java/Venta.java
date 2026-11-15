@@ -1,22 +1,25 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Venta {
     private int codigo;
     private Cliente cliente;
+    private Empleado empleado;
     private Funcion funcion;
     private Asiento asiento;
-    private LocalDateTime fechaYHora;
+    private LocalDate fecha;
     private double valorPagado;
     private EstadoVenta estadoVenta;
 
-    public Venta(int codigo, Cliente cliente, Funcion funcion, Asiento asiento) {
+    public Venta(int codigo, Cliente cliente, Empleado empleado, Funcion funcion, Asiento asiento, LocalDate fecha, double valorPagado, EstadoVenta estadoVenta) {
         this.codigo = codigo;
         this.cliente = cliente;
+        this.empleado = empleado;
         this.funcion = funcion;
         this.asiento = asiento;
-        this.fechaYHora = LocalDateTime.now();
-        this.estadoVenta = EstadoVenta.ACTIVA;
-        this.valorPagado = cliente.calcularDescuento(funcion.getValorBase());
+        this.fecha = fecha;
+        this.valorPagado = valorPagado;
+        this.estadoVenta = estadoVenta;
     }
 
     public int getCodigo() {
@@ -51,12 +54,12 @@ public class Venta {
         this.asiento = asiento;
     }
 
-    public LocalDateTime getFechaYHora() {
-        return fechaYHora;
+    public LocalDate getFecha() {
+        return fecha;
     }
 
-    public void setFechaYHora(LocalDateTime fechaYHora) {
-        this.fechaYHora = fechaYHora;
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     public double getValorPagado() {
@@ -82,7 +85,7 @@ public class Venta {
                 ", cliente " + cliente +
                 ", funcion " + funcion +
                 ", asiento " + asiento +
-                ", fechaYHora " + fechaYHora +
+                ", fechaYHora " + fecha +
                 ", valorPagado " + valorPagado +
                 ", estadoVenta " + estadoVenta ;
     }

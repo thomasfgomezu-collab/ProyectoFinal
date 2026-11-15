@@ -301,9 +301,10 @@ public class Cinema {
         }
     }
 
-    public boolean procesarVenta(int codigoVenta, int idCliente, int codigoFuncion, String fila, String numero) {
+    public boolean procesarVenta(int codigoVenta, int idCliente, int idEmpleado, int codigoFuncion, String fila, String numero,LocalDate fecha) {
         Cliente cliente = buscarClientePorId(idCliente);
         Funcion funcion = buscarFuncionPorCodigo(codigoFuncion);
+        Empleado empleado = buscarEmpleadoPorId(idEmpleado);
 
         if (cliente == null || funcion == null || funcion.getEstadoFuncion() != EstadoFuncion.PROGRAMADA) {
             return false;
@@ -314,7 +315,7 @@ public class Cinema {
             return false;
         }
 
-        Venta venta = new Venta(codigoVenta, cliente, funcion, asiento);
+        Venta venta = new Venta(codigoVenta, cliente, empleado, funcion, asiento,fecha, ,EstadoVenta.ACTIVA);
         return true;
     }
 
@@ -364,6 +365,8 @@ public class Cinema {
         }
         return masVendida != null ? masVendida.getNombre() + " (" + max + " entradas)" : "Sin ventas";
     }
+
+    public double 
     public String getNombre() {
         return nombre;
     }

@@ -212,7 +212,7 @@ public class Aplicacion {
             Pelicula pelicula=cinema.buscarPeliculaPorCodigo(codigoPelicula);
             int codigoSala=datos.leerEntero("Ingrese el codigo de la sala: ");
             Sala sala=cinema.buscarSalaPorCodigo(codigoSala);
-            LocalDate fecha1= datos.leerFecha("ingrese la fecha(dd/mm/aaaa): ");
+            LocalDate fecha1= datos.leerFecha("ingrese la fecha ");
             String hora=datos.leerTexto("Ingrese la hora de la funcion: ");
             double valorBase= datos.leerDouble("Ingrese el valor base: ");
 
@@ -237,17 +237,20 @@ public class Aplicacion {
 
     private void ventaDeEntrada() {
         System.out.println("---Venta de entrada---");
-        int codigoDeVenta = datos.leerEntero("ingrese codigo de venta");
-        int codigoClienteVenta = datos.leerEntero("ingrese codigo del cliente: ");
+        int codigoDeVenta = datos.leerEntero("Ingrese codigo de venta");
+        int codigoClienteVenta = datos.leerEntero("Ingrese codigo del cliente: ");
+        int codigoEmpleadoVenta = datos.leerEntero("Ingrese codigo del empleado: ");
         Cliente clienteVenta = cinema.buscarClientePorId(codigoClienteVenta);
         System.out.println("---Funciones---");
         cinema.MostrarListaFunciones("---Funciones---");
         Funcion funcion = imprimirListaFunciones();
         cinema.mostrarAsientosPorSala(funcion.getSala().getCodigo());
-        String fila= datos.leerTexto("ingrese la fila del asiento");
-        String numero= datos.leerTexto("ingrese el numero del asiento");
+        String fila= datos.leerTexto("Ingrese la fila del asiento");
+        String numero= datos.leerTexto("Ingrese el numero del asiento");
+        LocalDate fechaVenta=datos.leerFecha("Ingresa la fecha ");
 
-        boolean venta=cinema.procesarVenta(codigoDeVenta,codigoClienteVenta,funcion.getCodigo(),fila, numero);
+
+        boolean venta=cinema.procesarVenta(codigoDeVenta,codigoClienteVenta,codigoEmpleadoVenta,funcion.getCodigo(),fila, numero,fechaVenta);
 
         if(venta==true){
             System.out.println("la venta ha sido agregada con exito");
@@ -289,6 +292,7 @@ public class Aplicacion {
     }
 
     public static void imprimirListaFuncionesa(List<Funcion> listaFunciones) {
+
         if (listaFunciones == null || listaFunciones.isEmpty()) {
             System.out.println("La lista de funciones está vacía.");
             return;
