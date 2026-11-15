@@ -16,7 +16,7 @@ public class Venta {
         this.asiento = asiento;
         this.fechaYHora = LocalDateTime.now();
         this.estadoVenta = EstadoVenta.ACTIVA;
-        this.valorPagado = funcion.getValorBase() * cliente.getTipoCliente().getDescuento();
+        this.valorPagado = cliente.calcularDescuento(funcion.getValorBase());
     }
 
     public int getCodigo() {

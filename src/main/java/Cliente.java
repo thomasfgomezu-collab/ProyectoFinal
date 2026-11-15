@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cliente extends Persona{
+public class Cliente extends Persona implements ICliente{
 
     private TipoCliente tipoCliente;
 
@@ -14,6 +14,17 @@ public class Cliente extends Persona{
         this.ListaVenta=new ArrayList<>();
     }
 
+    @Override
+    public double calcularDescuento(double valor) {
+        double descuento = switch (this.tipoCliente) {
+            case GENERAL -> descuentoGeneral;
+            case ESTUDIANTE -> descuentoEstudiante;
+            case NIÑO -> descuentoNiños;
+            case ADULTO_MAYOR -> descuentoAdultoMayor;
+        };
+
+        return valor - (valor * descuento);
+    }
 
 
     public TipoCliente getTipoCliente() {
