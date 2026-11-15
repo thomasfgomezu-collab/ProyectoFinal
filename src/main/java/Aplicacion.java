@@ -31,7 +31,7 @@ public class Aplicacion {
                 case 4 -> adminiatrarSalas();
                 case 5 -> adminitrarFunciones();
                 case 6 -> ventaDeEntrada();
-                case 10-> reportesVentas();
+                case 7-> reportesVentas();
                 case 0 -> System.out.println("Gracias por utilizar CinemaUQ.");
                 default -> System.out.println("Opción no valida");
             }
@@ -45,12 +45,9 @@ public class Aplicacion {
         System.out.println(" 2. Registrar empleado");
         System.out.println(" 3. Administrar peliculas");
         System.out.println(" 4. Administrar salas");
-        System.out.println(" 5. AdiministrarFunciones");
-        System.out.println(" 6. ");
-        System.out.println(" 7. ");
-        System.out.println(" 8. ");
-        System.out.println(" 9. ");
-        System.out.println("10. Reportes de ventas");
+        System.out.println(" 5. Adiministrar Funciones");
+        System.out.println(" 6. Registrar ventas");
+        System.out.println(" 7. Reportes de ventas");
         System.out.println(" 0. Salir");
     }
 
@@ -258,12 +255,6 @@ public class Aplicacion {
             System.out.println("la venta no tiene los datos correctos o ya ha sido registrada");
         }
     }
-    //otras funciones del case
-
-
-
-
-
 
     private void reportesVentas(){
         System.out.println("---Reporte de ventas---");
